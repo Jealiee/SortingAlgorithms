@@ -176,12 +176,14 @@ namespace sort_AaDS
             int[] a_table_bubble = new int[TABLE_SIZE];
             int[] a_table_insertion = new int[TABLE_SIZE];
             int[] a_table_quick = new int[TABLE_SIZE];
+            int[] a_table_quick_modified = new int[TABLE_SIZE];
             int[] a_table_standard = new int[TABLE_SIZE];
 
             Array.Copy(a_table, a_table_selection, TABLE_SIZE);
             Array.Copy(a_table, a_table_bubble, TABLE_SIZE);
             Array.Copy(a_table, a_table_insertion, TABLE_SIZE);
             Array.Copy(a_table, a_table_quick, TABLE_SIZE);
+            Array.Copy(a_table, a_table_quick_modified, TABLE_SIZE);
             Array.Copy(a_table, a_table_standard, TABLE_SIZE);
 
 
@@ -206,16 +208,21 @@ namespace sort_AaDS
             TimeSpan time_quick = counter.Elapsed;
 
             counter.Restart();
+            QuickSort(a_table_quick_modified, 0, a_table_quick_modified.Length - 1);
+            counter.Stop();
+            TimeSpan time_quick_modified = counter.Elapsed;
+
+            counter.Restart();
             Array.Sort(a_table_standard);
             counter.Stop();
             TimeSpan time_standard = counter.Elapsed;
 
             ////Make sure if sorting is implemented
-            //SortingTests.Assert(SortingTests.isSortedAscending(a_table_selection), "Selection sort implemented wrongly!");
-            //SortingTests.Assert(SortingTests.isSortedAscending(a_table_bubble), "Bubble sort implemented wrongly!");
-            //SortingTests.Assert(SortingTests.isSortedAscending(a_table_insertion), "Insertion sort implemented wrongly!");
-            //SortingTests.Assert(SortingTests.isSortedAscending(a_table_quick), "Quick sort implemented wrongly!");
-            //SortingTests.Assert(SortingTests.isSortedAscending(a_table_standard), "Standard method Array.Sort implemented wrongly!");
+            SortingTests.Assert(SortingTests.isSortedAscending(a_table_selection), "Selection sort implemented wrongly!");
+            SortingTests.Assert(SortingTests.isSortedAscending(a_table_bubble), "Bubble sort implemented wrongly!");
+            SortingTests.Assert(SortingTests.isSortedAscending(a_table_insertion), "Insertion sort implemented wrongly!");
+            SortingTests.Assert(SortingTests.isSortedAscending(a_table_quick), "Quick sort implemented wrongly!");
+            SortingTests.Assert(SortingTests.isSortedAscending(a_table_standard), "Standard method Array.Sort implemented wrongly!");
 
             //If all the assertion have passed, print out the results and arrrays
             Console.WriteLine("Selection:  {0}", time_selection);
@@ -226,6 +233,8 @@ namespace sort_AaDS
             PrintArray(a_table_insertion);
             Console.WriteLine("Quick :     {0}", time_quick);
             PrintArray(a_table_quick);
+            Console.WriteLine("Quick modified :     {0}", time_quick);
+            PrintArray(a_table_quick_modified);
             Console.WriteLine("Array.Sort: {0}", time_standard);
             PrintArray(a_table_standard);
 
