@@ -30,7 +30,17 @@ namespace sort_AaDS
 
         public static void SelectionSort(int[] an_array)
         {
-         //TODO implemment here
+          for (int i =0; i< an_array.Length-1; i++)
+          {
+                int index_min = i;
+                 for (int j = i+1; j < an_array.Length; j++)
+                 {
+                    if (an_array[j]<an_array[index_min])
+                        index_min = j;
+                 }
+                Swap(an_array, i, index_min);
+
+          }
         }
 
 
@@ -45,7 +55,7 @@ namespace sort_AaDS
 
                  for (int j = 0; j < n -i- 1; j++)
                  {
-                    if (an_array[j]<an_array[j+1])
+                    if (an_array[j]>an_array[j+1])
                     {
                         Swap(an_array, j, j+1);
                         swapped = true;
@@ -60,17 +70,18 @@ namespace sort_AaDS
 
         public static void InsertionSort(int[] an_array)
         {
+            
             for (int i = 0; i < an_array.Length;i++)
             {
-               
+                int k = an_array[i];
                 int j = i - 1;
-                while (j >= 0 && an_array[j] > an_array[i])
+                while (j >= 0 && an_array[j] > k)
                 {
                     an_array[j+1] = an_array[j];
                     j = j - 1;
 
                 }
-                an_array[j+1] = an_array [i];
+                an_array[j+1] = k;
             }
 
         }
@@ -161,23 +172,23 @@ namespace sort_AaDS
             Console.WriteLine("Unsorted arrray:");
             PrintArray(a_table);
 
-            //int[] a_table_selection = new int[TABLE_SIZE];
+            int[] a_table_selection = new int[TABLE_SIZE];
             int[] a_table_bubble = new int[TABLE_SIZE];
             int[] a_table_insertion = new int[TABLE_SIZE];
             int[] a_table_quick = new int[TABLE_SIZE];
             int[] a_table_standard = new int[TABLE_SIZE];
 
-            //Array.Copy(a_table, a_table_selection, TABLE_SIZE);
+            Array.Copy(a_table, a_table_selection, TABLE_SIZE);
             Array.Copy(a_table, a_table_bubble, TABLE_SIZE);
             Array.Copy(a_table, a_table_insertion, TABLE_SIZE);
             Array.Copy(a_table, a_table_quick, TABLE_SIZE);
             Array.Copy(a_table, a_table_standard, TABLE_SIZE);
 
 
-            //counter.Start();
-            //SelectionSort(a_table_selection);
-            //counter.Stop();
-            //TimeSpan time_selection = counter.Elapsed;
+            counter.Start();
+            SelectionSort(a_table_selection);
+            counter.Stop();
+            TimeSpan time_selection = counter.Elapsed;
 
             counter.Restart();  // or: counter.Reset(); counter.Start();
             BubbleSort(a_table_bubble);
@@ -199,7 +210,7 @@ namespace sort_AaDS
             counter.Stop();
             TimeSpan time_standard = counter.Elapsed;
 
-            //Make sure if sorting is implemented
+            ////Make sure if sorting is implemented
             //SortingTests.Assert(SortingTests.isSortedAscending(a_table_selection), "Selection sort implemented wrongly!");
             //SortingTests.Assert(SortingTests.isSortedAscending(a_table_bubble), "Bubble sort implemented wrongly!");
             //SortingTests.Assert(SortingTests.isSortedAscending(a_table_insertion), "Insertion sort implemented wrongly!");
@@ -207,8 +218,8 @@ namespace sort_AaDS
             //SortingTests.Assert(SortingTests.isSortedAscending(a_table_standard), "Standard method Array.Sort implemented wrongly!");
 
             //If all the assertion have passed, print out the results and arrrays
-            //Console.WriteLine("Selection:  {0}", time_selection);
-            //PrintArray(a_table_selection);
+            Console.WriteLine("Selection:  {0}", time_selection);
+            PrintArray(a_table_selection);
             Console.WriteLine("Bubble:     {0}", time_bubble);
             PrintArray(a_table_bubble);
             Console.WriteLine("Insertion:  {0}", time_insertion);
